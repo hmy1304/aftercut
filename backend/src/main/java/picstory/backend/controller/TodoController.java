@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/todos")
 public class TodoController {
-    @GetMapping("api/todos")
+    @GetMapping
     public ResponseEntity<List<String>> getAllTodos() {
         return ResponseEntity.ok(Collections.emptyList());
     }

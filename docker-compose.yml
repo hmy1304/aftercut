@@ -4,9 +4,9 @@ services:
   container_name: mysql-crud
   environment:
    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
-   MYSQL_DATABASE: ${MYSQL_DATABASE:-cruddb}
-   MYSQL_USER: ${MYSQL_USER:-cruduser}
-   MYSQL_PASSWORD: ${MYSQL_PASSWORD:-crudpass}
+   MYSQL_DATABASE: ${MYSQL_DATABASE:-aftercut}
+   MYSQL_USER: ${MYSQL_USER:-aftercut}
+   MYSQL_PASSWORD: ${MYSQL_PASSWORD:-1234}
   ports:
    - "3306:3306"
   volumes:
@@ -35,9 +35,9 @@ services:
    mysql:
     condition: service_healthy
   environment:
-   SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-cruddb}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-   SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-cruduser}
-   SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-crudpass}
+   SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-aftercut}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+   SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-aftercut}
+   SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-1234}
    GRADLE_USER_HOME: /root/.gradle
   ports:
    - "8080:8080"

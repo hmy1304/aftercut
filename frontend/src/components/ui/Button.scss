@@ -1,0 +1,11 @@
+@use "@/styles/variables" as *;
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap: $btn-gap;
+    padding: $btn-padding-y $btn-padding-x;
+    border-radius: $r-pill;
+}

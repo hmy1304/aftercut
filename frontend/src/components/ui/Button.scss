@@ -6,6 +6,46 @@
     justify-content: center;
     position: relative;
     gap: $btn-gap;
-    padding: $btn-padding-y $btn-padding-x;
     border-radius: $r-pill;
+    border: 1px solid transparent;
+    font-size: $btn-font-size;
+    font-weight: $btn-landing-font-weight;
+    color: $line;
+    cursor: pointer;
+    transition: $ease;
+    background: transparent;
+
+    img {
+        width: $btn-icon-size;
+        transition: transform $ease;
+    }
+
+    &:hover {
+        transform: translateY(-$btn-icon-move);
+        color: $purple;
+    }
+
+    &.intro {
+        background: $blue;
+        color: $fg;
+        padding: $btn-padding-y $btn-landing-padding-x;
+        &:hover {
+            background: $fg;
+            color: $blue;
+            border: 1px solid $blue;
+        }
+    }
+
+    &.primary {
+        background: $blue;
+        font-size: $btn-font-weight;
+        font-weight: $btn-font-weight;
+        &:hover {
+            transform: translateY(0);
+            box-shadow: $shadow-sm;
+            background: $fg;
+            color: $blue;
+            border: 1px solid $blue;
+        }
+    }
 }

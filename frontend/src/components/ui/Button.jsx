@@ -9,8 +9,8 @@ const Button = ({
 }) => {
   return (
     <button onClick={onClick} className={`btn ${className}`}>
-      {text}
       {icons && <img src='/images/arrow.svg'/>}
+      {text}
     </button>
   )
 }

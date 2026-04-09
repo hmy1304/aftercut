@@ -1,32 +1,57 @@
-import React, {createContext, useContext, useMemo, useState} from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { getMe } from '../api/auth.api'
 
 const AuthCtx = createContext(null)
+export function AuthProvider({ children }) {
+    const [member, setMember] = useState(null)
+    const [isReady, setIsReady] = useState(false)
 
-export function AuthProvider({children}) {
-    const [token, setToken] = useState(localStorage.getItem('accessToken'))
+    useEffect(() => {
+        let mounted = true
+        const bootstrapAuth = async () => {
+            try {
+                const data = await getMe()
+                if (mounted) {
+                    setMember(data)
+                }
+            } catch {
+                if (mounted) {
+                    setMember(null)
+                }
+            } finally {
+                if (mounted) {
+                    setIsReady(true)
+                }
+            }
+        }
+        bootstrapAuth()
+        return () => {
+            mounted = false
+        }
+    }, [])
 
-    const login = (accessToken) => {
-        localStorage.setItem('accessToken', accessToken)
 
-        setToken(accessToken)
+    const login = (memberData) => {
+        setMember(memberData)
     }
 
-    const logout=()=>{
-        localStorage.removeItem("accesToken")
-
-        setToken(null)
+    const logout = () => {
+        setMember(null)
     }
 
-    const value = useMemo(()=>({
-        token,
-        isAuthed:!!token,
+    const value = useMemo(() => ({
+        member,
+        isReady,
+        isAuthed: !!member,
         login,
         logout
-    }),[token])
+
+    }), [member, isReady])
 
     return <AuthCtx.Provider value={value}>
         {children}
     </AuthCtx.Provider>
 }
 
-export const useAuth = ()=>useContext(AuthCtx)
+
+export const useAuth = () => useContext(AuthCtx)

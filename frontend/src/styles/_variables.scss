@@ -6,10 +6,10 @@ $bg: #07010f;
 $fg: rgb(255, 255, 255);
 $muted: #BB99FF;
 
-$purple: #7c3aed;
-$purple-2: #a855f7;
+$blue: #4A41CF;
+$purple: #AAA2FF;
 
-$line: rgba(255, 255, 255, 0.14);
+$line: #E3D5FF;
 $card: rgba(255, 255, 255, 0.06);
 
 $error: #ff6b6b;
@@ -35,7 +35,7 @@ $gray-900: #171717;
 // =============================
 
 $bg-soft: rgba(255, 255, 255, 0.04);
-$bg-hover: rgba(255, 255, 255, 0.08);
+$bg-hover: rgba(227, 213, 255, 0.3);
 
 
 // =============================
@@ -117,11 +117,14 @@ $z-toast: 2000;
 $btn-gap: $space-sm;
 $btn-padding-y: 10px;
 $btn-padding-x: 20px;
+$btn-landing-padding-x: 60px;
 
-$btn-font-size: $text-sm;
+$btn--landing-font-size: $text-lg;
+$btn-font-size: $text-md;
+$btn-landing-font-weight: $fw-bold;
 $btn-font-weight: $fw-medium;
 
-$btn-icon-size: 16px;
+$btn-icon-size: 20px;
 $btn-icon-move: 4px;
 
 $btn-hover-y: -2px;

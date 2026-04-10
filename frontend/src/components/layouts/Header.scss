@@ -1,0 +1,24 @@
+@use "@/styles/variables" as *;
+
+header {
+    background: $blue;
+    .inner {
+        max-width: $container-lg;
+        display: flex;
+        justify-content: space-between;
+        padding: $space-sm $space-md;
+    }
+
+    h1 {
+        width: 150px;
+    }
+    .right {
+        display: flex;
+        gap: $space-md;
+        align-items: center;
+        ul {
+            display: flex;
+            gap: $space-md;
+        }
+    }
+}

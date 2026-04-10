@@ -4,7 +4,7 @@
 
 /* Reset-ish */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box;margin: 0;padding: 0;
 }
 
 html,
@@ -41,15 +41,15 @@ ul {
   padding: 0;
   list-style: none;
 }
-
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 /* App background (보라 그라데이션 + 은은한 비네팅) */
 .app-bg {
   min-height: 100vh;
-  background:
-    radial-gradient(60% 60% at 50% 35%, rgba(168, 85, 247, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
-    radial-gradient(55% 55% at 20% 80%, rgba(124, 58, 237, 0.18) 0%, rgba(0, 0, 0, 0) 55%),
-    radial-gradient(70% 70% at 80% 85%, rgba(124, 58, 237, 0.14) 0%, rgba(0, 0, 0, 0) 55%),
-    linear-gradient(180deg, rgba(18, 2, 28, 1) 0%, rgba(7, 1, 15, 1) 55%, rgba(7, 1, 15, 1) 100%);
+    
 }
 
 /* Layout helpers */
@@ -66,8 +66,9 @@ ul {
 }
 
 section {
-  min-height: 100vh;
   position: relative;
+  flex: auto;
+  overflow-y:auto ;
 
   &.signup-section,
   &.login-section,

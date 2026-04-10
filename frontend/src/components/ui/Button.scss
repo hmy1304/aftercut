@@ -48,4 +48,14 @@
             border: 1px solid $blue;
         }
     }
+
+    &.header-btn {
+        border: 1px solid $line;
+        padding: 0 $space-sm;
+        &:hover {
+            border-color: none;
+            color: $blue;
+            background: $line;
+        }
+    }
 }

@@ -1,0 +1,82 @@
+@use "@/styles/variables" as *;
+
+.tags {
+    display: flex;
+    gap: $space-sm;
+    margin-top: $space-xl;
+
+    .post-tag {
+        display: inline-flex;
+        color: $purple;
+        border: 1px solid $purple;
+        border-radius: $r-lg;
+        padding: 0 $space-sm;
+
+        .post-tag-delete {
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 0 2px;
+            background-color: transparent;
+            font-size: 1rem;
+        }
+    }
+}
+
+.post-list {
+    margin-top: $space-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+}
+
+.post-card article {
+    border-bottom: 1px solid $gray-300;
+    display: flex;
+    padding: $space-lg;
+    color: $text;
+    gap: $space-lg;
+    justify-content: space-between;
+
+    &:hover {
+        background-color: $hover;
+    }
+
+    .post-card-body {
+        flex: 1;
+        
+        .post-title {
+            margin: $space-md 0;
+            font-size: $text-lg;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    
+        .post-content {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: $space-md;
+        }
+    }
+
+    .btn-wrap {
+        align-content: end;
+    }
+
+    .img-wrap {
+        background-color: $gray-50;
+        height: 242px;
+        width: 300px;
+        overflow: hidden;
+        border-radius: $r-sm;
+
+        img {
+            width: 100%;
+            // height: 100%;
+        }
+    }
+}

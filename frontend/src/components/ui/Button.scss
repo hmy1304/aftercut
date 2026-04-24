@@ -40,6 +40,7 @@
         background: $blue;
         font-size: $btn-font-weight;
         font-weight: $btn-font-weight;
+        padding: 0 $btn-padding-x;
         &:hover {
             transform: translateY(0);
             box-shadow: $shadow-sm;

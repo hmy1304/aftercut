@@ -5,8 +5,14 @@ import PublicLayout from './PublicLayout'
 import Landing from '../pages/Landing/Landing'
 import Login from "../pages/Auth/Login"
 import Signup from '../pages/Auth/Signup'
-import Dashboard from '../pages/Dashboard/Dashboard'
 import ProtectRoute from '../store/ProtectRoute'
+import PostDashboard from "../pages/posts/PostDashboard"
+import PostAll from "../pages/posts/PostsAll"
+import PostEdit from "../pages/posts/PostEdit"
+import PostCreate from "../pages/posts/PostCreate"
+import PostDetail from "../pages/posts/PostDetail"
+import Setting from "../pages/setting/Setting"
+import Profile from "../pages/profile/Profile"
 
 export const router = createBrowserRouter([
   {
@@ -26,10 +32,13 @@ export const router = createBrowserRouter([
       </ProtectRoute>
     ),
     children:[
-      {
-        index:true,
-        element:<Dashboard/>
-      }
+      { index:true, element:<PostDashboard/> },
+      {path:'posts/all', element: <PostAll/>},
+      {path:'posts/new', element: <PostCreate/>},
+      {path:'post/:id', element: <PostDetail/>},
+      {path:'post/:id/edit', element: <PostEdit/>},
+      {path:'profile', element: <Profile/>},
+      {path:'setting', element: <Setting/>}
     ]
   }
 ])

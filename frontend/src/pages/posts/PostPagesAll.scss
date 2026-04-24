@@ -1,0 +1,22 @@
+@use "@/styles/variables" as *;
+
+.post-section {
+    .inner {
+        max-width: $container-md;
+        .post-header{
+            background: none;
+            margin-bottom: $space-lg;
+            h2{
+                display: inline;
+                background: $blue;
+                padding: $space-sm;
+                font-size: $text-md;
+                font-weight: 500;
+                color: $line;
+            }
+            .btn.primary {
+                width: auto;
+            }
+        }
+    }
+}

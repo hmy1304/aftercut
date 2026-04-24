@@ -11,6 +11,9 @@ $purple: #AAA2FF;
 
 $line: #E3D5FF;
 $card: rgba(255, 255, 255, 0.06);
+$text: #675CD8;
+
+$hover: #e7e5ff;
 
 $error: #ff6b6b;
 $success: #22c55e;
@@ -115,8 +118,8 @@ $z-toast: 2000;
 // =============================
 
 $btn-gap: $space-sm;
-$btn-padding-y: 10px;
-$btn-padding-x: 20px;
+$btn-padding-y: 5px;
+$btn-padding-x: 10px;
 $btn-landing-padding-x: 60px;
 
 $btn--landing-font-size: $text-lg;

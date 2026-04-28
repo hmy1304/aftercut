@@ -18,5 +18,21 @@
                 width: auto;
             }
         }
+        .post-btn-wrap {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: $space-sm;
+            margin: $space-xl 0;
+            border-bottom: 1px solid $gray-300;
+            .filter-btn {
+                width: 40px;
+                height: 40px;
+                
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
     }
 }

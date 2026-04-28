@@ -1,42 +1,46 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import PostHeader from "../../components/posts/PostHeader"
 import PostList from "../../components/posts/PostList"
 import TagFilterBar from "../../components/posts/TagFilterBar"
 import Button from "../../components/ui/Button"
 import Input from "../../components/ui/Input"
 import "./PostPagesAll.scss"
+import {getPosts} from "../../api/post.api"
+import { useNavigate } from 'react-router-dom'
 
 const PostDashboard = () => {
   const [selectedTag, setSelectedTag] = useState('전체')
   const [searchKeyword, setSearchKeyword] = useState('')
-  const tags = ['태그1', '태그2', '태그3']
+  const [tags, setTags] = useState(['전체'])
 
-  const posts = [
-    {
-      id:1,
-      category:'CASE STUDY',
-      title:'Korba',
-      content:'1',
-      tags:['태그1', '태그2'],
-      thumbnail: '/images/sample1.jpg'
-    },
-    {
-      id:2,
-      category:'CASE STUDY',
-      title:'Picnote',
-      content:'2',
-      tags:['태그2'],
-      thumbnail: '/images/sample2.jpg'
-    },
-    {
-      id:3,
-      category:'CASE STUDY',
-      title:'Memo Archive',
-      content:'3',
-      tags:['태그3'],
-      thumbnail: '/images/sample3.jpg'
-    },
-  ]
+  const [posts, setPosts] = useState([])
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    const fetchPosts = async() => {
+      try {
+        const response = await getPosts()
+
+        console.log(response)
+        const rawPosts = Array.isArray(response)? response:[]
+
+        const mappedPosts = (rawPosts || []).map((post)=>({
+          id:post.id,
+          category:post.category,
+          title:post.title,
+          content:post.content,
+          tags:post.tags || [],
+          thumbnail:post.imageUrl || ''
+        }))
+
+        setPosts(mappedPosts)
+      } catch (error) {
+        console.error('게시글 조회 실패', error)
+        setPosts([])
+      }
+    }
+    fetchPosts()
+  },[])
 
   const filteredByTag = selectedTag === '전체'
   ? posts
@@ -57,6 +61,7 @@ const PostDashboard = () => {
 
   const handleCreatePost = () => {
     console.log('새 메모 작성')
+    navigate('/app/posts/new')
   }
 
   return (
@@ -75,9 +80,8 @@ const PostDashboard = () => {
           tags={tags}
           selectedTag={selectedTag}
           onChangeTag={setSelectedTag}
-          onCreate={handleCreatePost}
           />
-          <div className="btn-wrap">
+          <div className="post-btn-wrap">
             <div className="filter-btn">
               <img src="../../images/filter.svg" alt="filter" />
             </div>

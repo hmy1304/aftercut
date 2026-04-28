@@ -30,7 +30,7 @@ public class PostService {
             throw new IllegalArgumentException("로그인 후 이용해 주세요.");
         }
 
-        return postRepository.findAll()
+        return postRepository.findByMember_IdOrderByCreatedAtDesc(memberId)
                 .stream()
                 .map(PostResponse::from)
                 .toList();

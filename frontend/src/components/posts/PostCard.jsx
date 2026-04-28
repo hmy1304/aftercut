@@ -2,16 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PostTag from "./PostTag"
 import Button from '../ui/Button'
-import "./PostComponentAll.scss"
 
 const PostCard = ({post}) => {
   return (
-    <Link className='post-card'>
+    <Link to={`/app/posts/${post.id}`} className='post-card'>
       <article>
         <div className="img-wrap">
           <img src={post.thumbnail || 'images/placeholder.png'} alt={post.title} />
         </div>
         <div className="post-card-body">
+          <p className='post-category'>{post.category}</p>
           <h3 className="post-tile">{post.title}</h3>
           <div className="tags">
             {(post.tags || []).map((tag, i)=>(

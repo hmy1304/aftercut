@@ -1,0 +1,81 @@
+@use "@/styles/variables" as *;
+
+.post-create,
+.post-edit {
+    .post-form {
+        display: flex;
+        flex-direction: column;
+        padding: $space-lg 0;
+        
+        .post-card {
+            display: flex;
+            flex-direction: column;
+            gap: $space-md;
+
+            .input-field {
+                &:focus {
+                    border-color: rgba($blue, $alpha: 0.55);
+                    background: $bg-hover;
+                }
+
+                &::placeholder {
+                    color: rgba($color: $blue, $alpha: .45);
+                }
+            }
+
+            .post-field {
+                display: flex;
+                flex-direction: column;
+                gap: $space-md;
+            }
+
+            .post-label {
+                font-size: $text-lg;
+                color: $blue;
+                font-weight: $fw-medium;
+            }
+
+            .post-input-wrap {
+                width: 100%;
+
+                select {
+                    border: 1px solid $blue;
+                    outline: none;
+                    padding: $space-sm $space-md;
+                    border-radius: $r-pill;
+                }
+
+                .post-textarea {
+                    outline: none;
+                    border: none;
+                    border-top: 2px solid $blue;
+                    border-bottom: 2px solid $blue;
+                    background-color: $gray-100;
+                    height: 200px;
+                    width: 100%;
+                    min-height: 160px;
+                }
+            }
+        }
+
+        .post-upload-card {
+            .post-upload-placeholder {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: $space-md;
+                cursor: pointer;
+                .post-uppload-input {
+                    display: none;
+                }
+            }
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: flex-end;
+
+        }
+    }
+}

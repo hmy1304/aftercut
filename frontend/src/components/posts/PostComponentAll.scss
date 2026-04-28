@@ -4,6 +4,8 @@
     display: flex;
     gap: $space-sm;
     margin-top: $space-xl;
+    align-items: center;
+    flex-wrap: wrap;
 
     .post-tag {
         display: inline-flex;
@@ -11,6 +13,10 @@
         border: 1px solid $purple;
         border-radius: $r-lg;
         padding: 0 $space-sm;
+        gap: $space-sm;
+
+        border-radius: $r-lg;
+        align-items: center;
 
         .post-tag-delete {
             border: none;

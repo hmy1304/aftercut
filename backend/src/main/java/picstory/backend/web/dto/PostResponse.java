@@ -10,6 +10,7 @@ public record PostResponse(
         PostCategory category,
         String title,
         String content,
+        String review,
         Long memberId,
         String memberName,
         LocalDateTime createdAt
@@ -20,6 +21,7 @@ public record PostResponse(
                 post.getCategory(),
                 post.getTitle(),
                 post.getContent(),
+                post.getReview(),
                 post.getMember().getId(),
                 post.getMember().getName(),
                 post.getCreatedAt()

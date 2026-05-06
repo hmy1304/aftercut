@@ -45,11 +45,13 @@ const Header = () => {
         <div className="right">
           <ul>
             {menus.map((menu, i)=>(
-              <Button 
-              className="sq"
-              onClick={()=>navigate(menu.link)}
-              text={menu.name}
-              />
+              <li key={i}>
+                <Button 
+                className="sq"
+                onClick={()=>navigate(menu.link)}
+                text={menu.name}
+                />
+              </li>
             ))}
           </ul>
           <Button 

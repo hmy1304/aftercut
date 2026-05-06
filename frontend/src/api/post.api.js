@@ -1,6 +1,6 @@
 import client from "./client";
 
-export const createPost = async(playload) => {
+export const createPost = async(payload) => {
     const response = await client.post('/posts', payload)
 
     return response.data

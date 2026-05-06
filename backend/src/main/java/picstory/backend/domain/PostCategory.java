@@ -1,12 +1,8 @@
 package picstory.backend.domain;
 
 public enum PostCategory {
-    DAILY("일상"),
-    HOBBY("취미"),
-    TREVEL("여행"),
-    WORK("업무"),
-    STUDY("공부"),
-    ETC("기타");
+    ANIME("애니"),
+    MOVIE("극장판");
     private final String label;
      PostCategory(String label) {
          this.label = label;

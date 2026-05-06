@@ -51,6 +51,7 @@ public class PostService {
                 request.category(),
                 request.title(),
                 request.content(),
+                request.review(),
                 member
         );
 
@@ -67,14 +68,14 @@ public class PostService {
             throw new IllegalArgumentException("로그인 후 이용해 주세요.");
         }
 
-        Post post = postRepository.findById(memberId)
+        Post post = postRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
         if(!post.getMember().getId().equals(memberId)) {
             throw new IllegalArgumentException("본인이 작성한 글만 수정 가ㅣ능");
         }
 
-        post.update(request.category(), request.title(), request.content());
+        post.update(request.category(), request.title(), request.content(), request.review());
 
         return PostResponse.from(post);
     }
@@ -95,5 +96,27 @@ public class PostService {
         }
 
         postRepository.delete(post);
+    }
+
+    @Transactional
+    public PostResponse findById(Long id, HttpSession session) {
+        if(id==null) {
+            throw new IllegalArgumentException("게시글 id를 확인해 주세요");
+        }
+
+        Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
+
+        if(memberId==null) {
+            throw new IllegalArgumentException("로그인 후 이용해 주세요");
+        }
+
+        Post post = postRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        if(!post.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인이 작성한 글만 조회할 수 있습니다.");
+        }
+
+        return PostResponse.from(post);
     }
 }

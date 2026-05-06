@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
 
 const client = axios.create({
     baseURL:BASE_URL,
-    withCredentials:true
+    withCredentials: true
 })
 
 export default client

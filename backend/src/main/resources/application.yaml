@@ -22,5 +22,12 @@ management:
   endpoint:
     health:
       show-details: always
+
+server:
+  servlet:
+    session:
+      cookie:
+        same-site: lax
+        secure: false
 cors:
   allowed-origins: http://localhost:5173

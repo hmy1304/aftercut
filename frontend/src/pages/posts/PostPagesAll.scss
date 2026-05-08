@@ -6,6 +6,9 @@
         .post-header{
             background: none;
             margin-bottom: $space-lg;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid $blue;
             h2{
                 display: inline;
                 background: $blue;
@@ -18,6 +21,7 @@
                 width: auto;
             }
         }
+
         .post-btn-wrap {
             display: flex;
             justify-content: space-between;
@@ -31,6 +35,28 @@
                 img {
                     width: 100%;
                     height: 100%;
+                }
+            }
+        }
+    }
+
+    &.post-detail {
+        .inner {
+            .post-main {
+                margin-top: $space-xl;
+                display: flex;
+                flex-direction: column;
+                gap: $space-lg;
+                padding: $space-lg;
+                .img-wrap {
+                    margin: $space-md;
+                }
+                .post-card-category {
+                    color: $purple;
+                }
+                .post-card-title {
+                    font-size: $text-xl;
+                    color: $blue;
                 }
             }
         }

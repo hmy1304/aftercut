@@ -16,8 +16,9 @@ const PostDetailHeader = ({
         {showButton && (
             <Button 
             text={buttonText}
-            className={buttonClass}
+            className="back"
             onClick={onClick}
+            icons
             />
         )}
     </header>

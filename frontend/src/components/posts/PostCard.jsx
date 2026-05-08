@@ -1,9 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import { deletePost } from '../../api/post.api'
+import { Link, useNavigate } from 'react-router-dom'
 import PostTag from "./PostTag"
 import Button from '../ui/Button'
 
 const PostCard = ({post}) => {
+  const navigate = useNavigate()
+
+  const handlePostDelete = async(e) => {
+    e.preventDefault
+    if(confirm('후기를 정말 삭제하시겠습니까?')) {
+      try {
+        await deletePost(Number(post.id))
+        navigate('/app', {replace:true})
+      } catch (error) {
+        console.error('후기 삭제 오류', error.response.data)
+      }
+    }
+  }
+
   return (
     <Link to={`/app/posts/${post.id}`} className='post-card'>
       <article>
@@ -21,7 +36,7 @@ const PostCard = ({post}) => {
           <p className="post-content">{post.content}</p>
         </div>
         <div className="btn-wrap">
-          <Button text="삭제" className="primary"/>
+          <Button text="삭제" className="primary" onClick={handlePostDelete}/>
         </div>
       </article>
     </Link>

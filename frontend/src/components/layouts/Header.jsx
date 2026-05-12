@@ -12,7 +12,7 @@ const Header = () => {
   const menus = [
     {
       name: '내 후기',
-      link: '/app/memos'
+      link: '/app/posts/all'
     },
     {
       name: '프로필',

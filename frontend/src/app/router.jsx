@@ -7,7 +7,7 @@ import Login from "../pages/Auth/Login"
 import Signup from '../pages/Auth/Signup'
 import ProtectRoute from '../store/ProtectRoute'
 import PostDashboard from "../pages/posts/PostDashboard"
-import PostAll from "../pages/posts/PostsAll"
+import PostsAll from '../pages/posts/PostsAll'
 import PostEdit from "../pages/posts/PostEdit"
 import PostCreate from "../pages/posts/PostCreate"
 import PostDetail from "../pages/posts/PostDetail"
@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
     ),
     children:[
       { index:true, element:<PostDashboard/> },
-      {path:'posts/all', element: <PostAll/>},
+      {path:'posts/all', element: <PostsAll/>},
       {path:'posts/new', element: <PostCreate/>},
       {path:'posts/:id', element: <PostDetail/>},
       {path:'posts/:id/edit', element: <PostEdit/>},

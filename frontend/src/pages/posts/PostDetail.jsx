@@ -77,26 +77,28 @@ const PostDetail = () => {
             <div className="btn-wrap">
               <Button 
               text="수정"
-              className="delete bl"
+              className="edit primary"
               onClick={()=>{navigate(`/app/posts/${id}/edit`)}}
               />
               <Button 
               text="삭제"
-              className="delete bl"
+              className="delete primary"
               onClick={handlePostDelete}
               />
             </div>
-            <div className='post-card-content-wrap'>
-              <label className='post-label'>줄거리</label>
-              <p className='post-card-content'>
-                {post.content}
-              </p>
-            </div>
-            <div className="post-card-review-wrap">
-              <label className='post-label'>후기</label>
-              <p className='post-card-review'>
-                {post.review}
-              </p>
+            <div className="post-card-body-wrap">
+              <div className='post-card-content-wrap'>
+                <label className='post-label'>줄거리</label>
+                <p className='post-card-content'>
+                  {post.content}
+                </p>
+              </div>
+              <div className="post-card-review-wrap">
+                <label className='post-label'>후기</label>
+                <p className='post-card-review'>
+                  {post.review}
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ import picstory.backend.repository.PostRepository;
 import picstory.backend.web.dto.CreatePostRequest;
 import picstory.backend.web.dto.PostResponse;
 import picstory.backend.web.dto.UpdatePostRequest;
+import picstory.backend.web.dto.UpdatePostTagsRequest;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final TagService tagService;
 
     private static final String LOGIN_MEMBER_ID = "LOGIN_MEMBER_ID";
 
@@ -55,6 +57,8 @@ public class PostService {
                 member
         );
 
+        post.updateTags(tagService.resolveOrCreateTags(memberId, request.tags()));
+
         Post savePost = postRepository.save(post);
 
         return PostResponse.from(savePost);
@@ -62,6 +66,10 @@ public class PostService {
 
     @Transactional
     public PostResponse update(Long id, UpdatePostRequest request,  HttpSession session) {
+        if(id==null) {
+            throw new IllegalArgumentException("게시글 id를 확인해주세요.");
+        }
+
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
 
         if(memberId == null) {
@@ -77,11 +85,41 @@ public class PostService {
 
         post.update(request.category(), request.title(), request.content(), request.review());
 
+        if(request.tags()!=null) {
+            post.updateTags(tagService.resolveOrCreateTags(memberId, request.tags()));
+        }
+
+        return PostResponse.from(post);
+    }
+
+    @Transactional
+    public PostResponse updateTags(Long id, UpdatePostTagsRequest request, HttpSession session){
+        if(id==null){
+            throw  new IllegalArgumentException("게시글 id를 확인해 주세요");
+        }
+
+        Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
+
+        if (memberId == null) {
+            throw new IllegalArgumentException("로그인 후 이용해 주세요");
+        }
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        if (!post.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인이 작성한 글만 수정 가능");
+        }
+
+        post.updateTags(tagService.resolveOrCreateTags(memberId, request.tags()));
         return PostResponse.from(post);
     }
 
     @Transactional
     public void delete(Long id, HttpSession session) {
+        if(id==null) {
+            throw new IllegalArgumentException("게시글 id를 확인해주세요.");
+        }
+
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
 
         if(memberId == null) {

@@ -54,10 +54,90 @@ const PostsAll = () => {
 
   const filteredPosts = useFilteredPosts(posts, selectedTag, searchKeyword)
 
-  
+  useEffect(()=>{
+    setCurrentPage(1)
+  },[selectedTag, searchKeyword])
+
+  const totalPages = Math.ceil(filteredPosts.length/ itemsPerPage)
+  const startIndex =(currentPage -1) * itemsPerPage
+
+  const endIndex =startIndex + itemsPerPage
+
+  const currentPosts = filteredPosts.slice(startIndex,endIndex)
+  const pageNumbers = Array.from({length:totalPages},(_,i)=>i+1)
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev)=>Math.max(prev-1,1))
+  }
+
+  const handleNextPage=()=>{
+    setCurrentPage((prev)=>Math.max(prev+1,totalPages))
+  }
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page)
+  }
+
+  const handleCreatePost=()=>{
+    console.log("새 메모 작성")
+    navigate('/app/posts/new')
+  }
 
   return (
-    <div>PostsAll</div>
+    <section className='page post-section post-all'>
+      <div className="inner">
+        <PostHeader/>
+        <div className="input-post">
+          <Input 
+          placeholder="검색할 제목을 입력하시오"
+          value={searchKeyword}
+          onChange={(e)=>setSearchKeyword(e.target.value)}
+          />
+        </div>
+        <div className="tags-wrapper">
+          <TagFilterBar 
+          tags={tags}
+          selectedTag={selectedTag}
+          onChangeTag={setSelectedTag}
+          />
+          <div className="post-btn-wrap">
+            <div className="filter-btn">
+              <img src="../../images/filter.svg" alt="filter" />
+            </div>
+            <Button 
+            text="후기 작성하기" 
+            className="primary"
+            onClick={handleCreatePost}/>
+          </div>
+        </div>
+        <PostList posts={filteredPosts}/>
+
+        <div className="btn-wrap">
+          <Button 
+          onClick={handlePrevPage}
+          text="<"
+          disabled={currentPage==1}
+          className="bl"
+          />
+          <ul>
+            {pageNumbers.map((page)=>(
+              <li
+              key={page}
+              onClick={()=>handlePageClick(page)}
+              >
+                {page}
+              </li>
+            ))}
+          </ul>
+          <Button 
+          disabled={currentPage==totalPages || totalPages==0}
+          onClick={handleNextPage}
+          text=">"
+          className="bl"
+          />
+        </div>
+      </div>
+    </section>
   )
 }
 

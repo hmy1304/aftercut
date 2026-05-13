@@ -105,4 +105,40 @@
             }
         }
     }
+
+    &.post-all {
+        .btn-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: $space-xl;
+            gap: $space-md;
+            align-items: center;
+
+            button {
+                background-color: none;
+                border: 1px solid $purple;
+                border-radius: $r-xs;
+                padding: $space-sm;
+                &:hover {
+                    background-color: $muted;
+                    color: $hover;
+                    // border-color: $fg;
+                }
+            }
+            ul {
+                display: flex;
+                gap: $space-md;
+                li {
+                    cursor: pointer;
+                    padding: $space-sm;
+
+                    &:hover {
+                        color: $fg;
+                        font-weight: $fw-bold;
+                        background-color: $purple;
+                    }
+                }
+            }
+        }
+    }
 }

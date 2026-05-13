@@ -41,7 +41,7 @@ public class PostController {
         return postService.update(id, request, session);
     }
 
-    @PatchMapping("/{id/tags")
+    @PatchMapping("/{id}/tags")
     public PostResponse updateTags(
             @PathVariable Long id,
             @RequestBody UpdatePostTagsRequest request,

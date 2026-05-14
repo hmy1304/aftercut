@@ -18,17 +18,18 @@ public class SecurityConfig {
     private String allowedOrigins;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/members","/members/**").permitAll()
+                        .requestMatchers("/members", "/members/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        //.anyRequest().authenticated()
+                        // ✅ 추가: S3 업로드 엔드포인트 허용
+                        .requestMatchers("/upload", "/upload/**").permitAll()
                         .anyRequest().permitAll()
                 )
-                .formLogin(form->form.disable())
+                .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
 
         return http.build();
@@ -39,11 +40,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-
         config.setAllowedOrigins(List.of(allowedOrigins));
-
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-
         config.setAllowedHeaders(List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

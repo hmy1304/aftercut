@@ -8,7 +8,7 @@
     gap: $btn-gap;
     border-radius: $r-pill;
     border: 1px solid transparent;
-    font-size: $btn-font-size;
+    font-size: $btn-font-size;          // ✅ 버그 수정: 기존 $btn-font-weight(500) → $btn-font-size($text-md)
     font-weight: $btn-landing-font-weight;
     color: $line;
     cursor: pointer;
@@ -20,28 +20,41 @@
         transition: transform $ease;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
         transform: translateY(-$btn-icon-move);
         color: $purple;
     }
 
+    // ✅ disabled 상태 (globals.scss의 전역 :disabled 위에 버튼 전용 스타일)
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+        transform: none;
+        pointer-events: none;
+    }
+
+    // ── 랜딩/로그인 CTA ──────────────────────────────
     &.intro {
         background: $blue;
         color: $fg;
         padding: $btn-padding-y $btn-landing-padding-x;
-        &:hover {
+
+        &:hover:not(:disabled) {
             background: $fg;
             color: $blue;
             border: 1px solid $blue;
         }
     }
 
+    // ── 주요 액션 버튼 (파란 배경) ────────────────────
     &.primary {
         background: $blue;
-        font-size: $btn-font-weight;
+        color: $fg;                         // ✅ 명시: 흰 텍스트
+        font-size: $btn-font-size;          // ✅ 버그 수정: 기존 $btn-font-weight → $btn-font-size
         font-weight: $btn-font-weight;
-        padding: 0 $btn-padding-x;
-        &:hover {
+        padding: $btn-padding-y $btn-padding-x;
+
+        &:hover:not(:disabled) {
             transform: translateY(0);
             background: $fg;
             color: $blue;
@@ -49,17 +62,42 @@
         }
     }
 
+    // ── 헤더 버튼 ─────────────────────────────────────
     &.header-btn {
         border: 1px solid $line;
         padding: 0 $space-sm;
-        &:hover {
-            border-color: none;
+
+        &:hover:not(:disabled) {
             color: $blue;
             background: $line;
         }
     }
 
+    // ── 뒤로가기 (다크 배경 기본) ─────────────────────
+    &.back {
+        // 기본은 $line (헤더/다크 배경에서 사용)
+    }
+
+    // ── 뒤로가기 라이트 배경 조합 ─────────────────────
     &.back.bl {
         color: $gray-900;
+    }
+
+    // ── 정사각형 텍스트 버튼 (헤더 nav) ──────────────
+    &.sq {
+        border-radius: $r-xs;
+        padding: $btn-padding-y $btn-padding-x;
+    }
+
+    // ── 라이트 아웃라인 ───────────────────────────────
+    &.bl {
+        color: $gray-800;
+        border-color: $gray-300;
+
+        &:hover:not(:disabled) {
+            background: $gray-100;
+            color: $gray-900;
+            transform: translateY(0);
+        }
     }
 }

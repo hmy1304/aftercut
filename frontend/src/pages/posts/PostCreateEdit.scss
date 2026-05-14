@@ -5,7 +5,9 @@
     .create-header {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid $blue;
+        border-bottom: 2px solid $blue;
+        padding-bottom: $space-sm;
+        margin-bottom: $space-lg;
         h2 {
             color: $blue;
         }
@@ -15,7 +17,7 @@
         display: flex;
         flex-direction: column;
         padding: $space-lg 0;
-        
+
         .post-card {
             display: flex;
             flex-direction: column;
@@ -28,34 +30,60 @@
                 }
 
                 &::placeholder {
-                    color: rgba($color: $blue, $alpha: .45);
+                    color: $gray-400;
                 }
             }
 
+            // ── 태그 영역 ──────────────────────────────────────
             .post-tag-box {
+                display: flex;
+                flex-direction: column;
+                gap: $space-sm;
+
                 .tags {
-                    .tags-input-wrap {
-                        display: flex;
-                        gap: 1rem;
-                        input {
-                            border: none;
-                            outline: none;
-                            border-bottom: 1px solid $purple;
-                        }
-                    }
                     display: flex;
                     flex-direction: column;
+                    gap: $space-sm;
+                    margin-top: 0;       // PostComponentAll.scss의 margin-top: $space-xl 덮어쓰기
+
+                    .tags-input-wrap {
+                        display: flex;
+                        gap: $space-sm;
+                        align-items: center;
+
+                        .post-tag-input {
+                            flex: 1;
+                            border: none;
+                            border-bottom: 1px solid $blue;
+                            outline: none;
+                            padding: $space-sm 0;
+                            font-size: $text-sm;
+                            color: $gray-800;
+                            background: transparent;
+
+                            &::placeholder {
+                                color: $gray-400;
+                            }
+                        }
+                    }
+
+                    .tags-wrap {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: $space-sm;
+                        min-height: 32px;   // 태그 없을 때도 영역 확보
+                    }
                 }
             }
 
             .post-field {
                 display: flex;
                 flex-direction: column;
-                gap: $space-md;
+                gap: $space-sm;
             }
 
             .post-label {
-                font-size: $text-lg;
+                font-size: $text-md;
                 color: $blue;
                 font-weight: $fw-medium;
             }
@@ -68,6 +96,9 @@
                     outline: none;
                     padding: $space-sm $space-md;
                     border-radius: $r-pill;
+                    color: $gray-800;
+                    background: transparent;
+                    cursor: pointer;
                 }
 
                 .post-textarea {
@@ -79,12 +110,30 @@
                     height: 200px;
                     width: 100%;
                     min-height: 160px;
+                    padding: $space-sm $space-md;
+                    font-size: $text-sm;
+                    color: $gray-800;
+                    resize: vertical;
+
+                    &::placeholder {
+                        color: $gray-400;
+                    }
                 }
             }
         }
 
+        // ── 업로드 영역 ────────────────────────────────────────
         .post-upload-card {
             padding: $space-md;
+            border: 2px dashed $blue;
+            border-radius: $r-sm;
+            cursor: pointer;
+            transition: $ease;
+
+            &:hover {
+                background-color: $bg-hover;
+            }
+
             .post-upload-placeholder {
                 display: flex;
                 flex-direction: column;
@@ -92,8 +141,16 @@
                 text-align: center;
                 gap: $space-md;
                 cursor: pointer;
+                min-height: 100px;
+                justify-content: center;
+
                 .post-uppload-input {
                     display: none;
+                }
+
+                .upload-hint {
+                    color: $gray-400;
+                    font-size: $text-sm;
                 }
             }
         }
@@ -101,6 +158,7 @@
         .post-actions {
             display: flex;
             justify-content: flex-end;
+
             .btn {
                 padding: $space-sm $space-lg;
             }

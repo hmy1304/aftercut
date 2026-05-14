@@ -5,10 +5,17 @@ const Button = ({
   text,
   className,
   onClick,
-  icons
+  icons,
+  type = 'button',   // ✅ 기본값을 'button'으로 명시 (form submit 방지)
+  disabled,
 }) => {
   return (
-    <button onClick={onClick} className={`btn ${className}`}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`btn ${className}`}
+      disabled={disabled}
+    >
       {icons && <img src='/images/arrow.svg'/>}
       {text}
     </button>

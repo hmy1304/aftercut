@@ -1,1 +1,32 @@
+# ── Node ─────────────────────────────────────
 node_modules
+
+# ── 환경변수 (절대 커밋 금지!) ─────────────────
+.env
+.env.local
+.env.*.local
+
+# ── macOS ─────────────────────────────────────
+.DS_Store
+
+# ── Java / Gradle ─────────────────────────────
+backend/build/
+backend/.gradle/
+backend/out/
+*.class
+*.jar
+*.war
+
+# ── IDE ───────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── Frontend 빌드 결과물 ──────────────────────
+frontend/dist/
+frontend/.vite/

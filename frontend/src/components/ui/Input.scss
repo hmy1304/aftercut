@@ -12,19 +12,19 @@
         border: none;
         border-radius: 0;
         background-color: transparent;
-        border-bottom: 1px solid $line;
-        color: $line;
+        border-bottom: 1px solid $blue;
+        color: $gray-800;           // 흰 배경에서 읽히는 진한 텍스트
         font-size: $text-sm;
         outline: none;
         transition: $ease;
 
         &::placeholder {
-            color: $line;
+            color: $gray-400;       // 흰 배경에서 구분되는 회색 placeholder
         }
         &:focus {
-            border-color: $purple;
+            border-color: $blue;
             background: $bg-hover;
-            box-shadow: 0 0 0 2px rgba($purple, .15);
+            box-shadow: 0 0 0 2px rgba($blue, .15);
         }
     }
 }

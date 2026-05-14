@@ -10,8 +10,6 @@
         height: 400px;
         z-index: -1;
 
-        
-
         .bg-track {
             display: flex;
             height: 100%;
@@ -83,9 +81,11 @@
             align-items: center;
             justify-content: flex-end;
             gap: $space-md;
+            margin-top: $space-md;
             span {
                 color: $muted;
                 &.login-span{
+                    cursor: pointer;
                     &:hover {
                         color: $line;
                         font-weight: $fw-bold;
@@ -94,4 +94,84 @@
             }
         }
     }
+}
+
+// ──────────────────────────────
+// ✅ 소셜 로그인 구분선
+// ──────────────────────────────
+.social-divider {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin: $space-lg 0 $space-md;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: $line;
+        opacity: 0.4;
+    }
+
+    span {
+        font-size: 13px;
+        color: $muted;
+        white-space: nowrap;
+    }
+}
+
+// ──────────────────────────────
+// ✅ 카카오 로그인 버튼
+// ──────────────────────────────
+.kakao-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px;
+    background-color: #FEE500;
+    color: #000000;
+    border: none;
+    border-radius: $r-lg;
+    font-size: $text-sm;
+    font-weight: $fw-bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    font-family: inherit;
+
+    &:hover {
+        background-color: #F0D900;
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+        background-color: #E6CF00;
+    }
+
+    .kakao-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+}
+
+// ──────────────────────────────
+// 공통 에러 텍스트
+// ──────────────────────────────
+.error-text {
+    color: $error;
+    font-size: $text-sm;
+    margin-top: $space-sm;
+    padding: 6px $space-sm;
+    border: 1px solid rgba($error, 0.3);
+    border-radius: $r-xs;
+    background: rgba($error, 0.06);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }

@@ -51,30 +51,34 @@ public class Post {
     )
     private Set<Tag> tags = new HashSet<>();
 
-    public Post(PostCategory category,  String title, String content, String review, Member member) {
+    public Post(PostCategory category, String title, String content, String review, Member member) {
         this.category = category;
         this.title = title;
         this.content = content;
         this.review = review;
-        this.member= member;
+        this.member = member;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void update(PostCategory category,  String title, String content, String review) {
+    public void update(PostCategory category, String title, String content, String review) {
         this.category = category;
         this.title = title;
         this.content = content;
         this.review = review;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
         this.updatedAt = LocalDateTime.now();
     }
 
     public void updateTags(Set<Tag> tags) {
         this.tags.clear();
-        if(tags != null) {
+        if (tags != null) {
             this.tags.addAll(tags);
         }
         this.updatedAt = LocalDateTime.now();
     }
-
 }

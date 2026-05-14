@@ -27,10 +27,7 @@ public class PostService {
 
     public List<PostResponse> findMyPosts(HttpSession session) {
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
-
-        if(memberId == null){
-            throw new IllegalArgumentException("로그인 후 이용해 주세요.");
-        }
+        if (memberId == null) throw new IllegalArgumentException("로그인 후 이용해 주세요.");
 
         return postRepository.findByMember_IdOrderByCreatedAtDesc(memberId)
                 .stream()
@@ -41,13 +38,10 @@ public class PostService {
     @Transactional
     public PostResponse create(CreatePostRequest request, HttpSession session) {
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
-
-        if(memberId == null) {
-            throw new IllegalArgumentException("로그인 후 이용해 주세요.");
-        }
+        if (memberId == null) throw new IllegalArgumentException("로그인 후 이용해 주세요.");
 
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         Post post = new Post(
                 request.category(),
@@ -57,35 +51,38 @@ public class PostService {
                 member
         );
 
+        // ✅ imageUrl S3 URL 저장
+        if (request.imageUrl() != null && !request.imageUrl().isBlank()) {
+            post.updateImageUrl(request.imageUrl());
+        }
+
         post.updateTags(tagService.resolveOrCreateTags(memberId, request.tags()));
 
-        Post savePost = postRepository.save(post);
-
-        return PostResponse.from(savePost);
+        return PostResponse.from(postRepository.save(post));
     }
 
     @Transactional
-    public PostResponse update(Long id, UpdatePostRequest request,  HttpSession session) {
-        if(id==null) {
-            throw new IllegalArgumentException("게시글 id를 확인해주세요.");
-        }
+    public PostResponse update(Long id, UpdatePostRequest request, HttpSession session) {
+        if (id == null) throw new IllegalArgumentException("게시글 id를 확인해주세요.");
 
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
-
-        if(memberId == null) {
-            throw new IllegalArgumentException("로그인 후 이용해 주세요.");
-        }
+        if (memberId == null) throw new IllegalArgumentException("로그인 후 이용해 주세요.");
 
         Post post = postRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        if(!post.getMember().getId().equals(memberId)) {
-            throw new IllegalArgumentException("본인이 작성한 글만 수정 가ㅣ능");
+        if (!post.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인이 작성한 글만 수정 가능합니다.");
         }
 
         post.update(request.category(), request.title(), request.content(), request.review());
 
-        if(request.tags()!=null) {
+        // ✅ imageUrl 수정 반영
+        if (request.imageUrl() != null) {
+            post.updateImageUrl(request.imageUrl());
+        }
+
+        if (request.tags() != null) {
             post.updateTags(tagService.resolveOrCreateTags(memberId, request.tags()));
         }
 
@@ -93,16 +90,12 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updateTags(Long id, UpdatePostTagsRequest request, HttpSession session){
-        if(id==null){
-            throw  new IllegalArgumentException("게시글 id를 확인해 주세요");
-        }
+    public PostResponse updateTags(Long id, UpdatePostTagsRequest request, HttpSession session) {
+        if (id == null) throw new IllegalArgumentException("게시글 id를 확인해 주세요");
 
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
+        if (memberId == null) throw new IllegalArgumentException("로그인 후 이용해 주세요");
 
-        if (memberId == null) {
-            throw new IllegalArgumentException("로그인 후 이용해 주세요");
-        }
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
@@ -116,20 +109,15 @@ public class PostService {
 
     @Transactional
     public void delete(Long id, HttpSession session) {
-        if(id==null) {
-            throw new IllegalArgumentException("게시글 id를 확인해주세요.");
-        }
+        if (id == null) throw new IllegalArgumentException("게시글 id를 확인해주세요.");
 
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
-
-        if(memberId == null) {
-            throw new IllegalArgumentException("로그인 후 이용해주세요.");
-        }
+        if (memberId == null) throw new IllegalArgumentException("로그인 후 이용해주세요.");
 
         Post post = postRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        if(!post.getMember().getId().equals(memberId)) {
+        if (!post.getMember().getId().equals(memberId)) {
             throw new IllegalArgumentException("본인이 작성한 글만 삭제 가능");
         }
 
@@ -138,20 +126,15 @@ public class PostService {
 
     @Transactional
     public PostResponse findById(Long id, HttpSession session) {
-        if(id==null) {
-            throw new IllegalArgumentException("게시글 id를 확인해 주세요");
-        }
+        if (id == null) throw new IllegalArgumentException("게시글 id를 확인해 주세요");
 
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
-
-        if(memberId==null) {
-            throw new IllegalArgumentException("로그인 후 이용해 주세요");
-        }
+        if (memberId == null) throw new IllegalArgumentException("로그인 후 이용해 주세요");
 
         Post post = postRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
-        if(!post.getMember().getId().equals(memberId)) {
+        if (!post.getMember().getId().equals(memberId)) {
             throw new IllegalArgumentException("본인이 작성한 글만 조회할 수 있습니다.");
         }
 

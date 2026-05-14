@@ -1,5 +1,5 @@
 // =============================
-// Color
+// Color — Brand
 // =============================
 
 $bg: #07010f;
@@ -15,9 +15,16 @@ $text: #675CD8;
 
 $hover: #e7e5ff;
 
-$error: #ff6b6b;
+// ── Accent (hoverLift 카드 등에 쓰는 강조 컬러) ──
+$accent:      #d395ff;        // border-color on hover
+$glow-color:  #A22DF7;        // box-shadow glow
+$card-dark:   #1E0044;        // 다크 카드 hover 배경
+
+// ── Semantic ──────────────────
+$error:   #ff6b6b;
 $success: #22c55e;
 $warning: #f59e0b;
+
 
 // =============================
 // Gray Scale
@@ -33,37 +40,45 @@ $gray-600: #525252;
 $gray-700: #404040;
 $gray-800: #262626;
 $gray-900: #171717;
+
+
 // =============================
 // Background
 // =============================
 
-$bg-soft: rgba(255, 255, 255, 0.04);
-$bg-hover: rgba(227, 213, 255, 0.3);
+$bg-soft:        rgba(255, 255, 255, 0.04);
+$bg-hover:       rgba(227, 213, 255, 0.3);    // 다크 배경용 hover
+$bg-hover-light: rgba($blue, 0.06);           // ✅ 흰 배경용 hover (추가)
 
 
 // =============================
 // Radius
 // =============================
 
-$r-lg: 24px;
-$r-md: 16px;
-$r-sm: 12px;
-$r-xs: 8px;
+$r-lg:   24px;
+$r-md:   16px;
+$r-sm:   12px;
+$r-xs:   8px;
 $r-pill: 999px;
+
 
 // =============================
 // Spacing
 // =============================
 
+$space-xs: 4px;     // ✅ 추가
 $space-sm: 8px;
 $space-md: 16px;
 $space-lg: 24px;
 $space-xl: 36px;
+$space-2xl: 60px;   // ✅ 추가
+
+
 // =============================
 // Shadow
 // =============================
 
-$shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+$shadow:    0 20px 60px rgba(0, 0, 0, 0.35);
 $shadow-sm: 0 8px 10px rgba(0, 0, 0, 0.35);
 
 
@@ -75,32 +90,42 @@ $container-lg: 1200px;
 $container-md: 960px;
 $container-sm: 590px;
 
-$header-h: 64px;
-
+$header-h:    64px;
 $section-gap: 120px;
+
+
+// =============================
+// Breakpoints                  ✅ 추가
+// =============================
+
+$bp-xs: 480px;    // 작은 모바일
+$bp-sm: 640px;    // 모바일
+$bp-md: 768px;    // 태블릿 기준
+$bp-lg: 1024px;   // 작은 데스크탑
+$bp-xl: 1280px;   // 일반 데스크탑
 
 
 // =============================
 // Typography
 // =============================
 
-$text-xs: 12px;
-$text-sm: 14px;
-$text-md: 16px;
-$text-lg: 20px;
-$text-xl: 28px;
+$text-xs:  12px;
+$text-sm:  14px;
+$text-md:  16px;
+$text-lg:  20px;
+$text-xl:  28px;
 $text-2xl: 54px;
 
 $fw-normal: 400;
 $fw-medium: 500;
-$fw-bold: 700;
+$fw-bold:   700;
 
 
 // =============================
 // Motion
 // =============================
 
-$ease: 0.25s ease;
+$ease:      0.25s ease;
 $ease-fast: 0.15s ease;
 
 
@@ -109,23 +134,23 @@ $ease-fast: 0.15s ease;
 // =============================
 
 $z-header: 100;
-$z-modal: 1000;
-$z-toast: 2000;
+$z-modal:  1000;
+$z-toast:  2000;
 
 
 // =============================
 // Button
 // =============================
 
-$btn-gap: $space-sm;
-$btn-padding-y: 5px;
-$btn-padding-x: 10px;
+$btn-gap:              $space-sm;
+$btn-padding-y:        5px;
+$btn-padding-x:        10px;
 $btn-landing-padding-x: 60px;
 
-$btn--landing-font-size: $text-lg;
-$btn-font-size: $text-md;
+$btn-font-size:           $text-md;    // ✅ 명확히 font-size 전용
+$btn--landing-font-size:  $text-lg;
+$btn-font-weight:         $fw-medium;  // font-weight 전용
 $btn-landing-font-weight: $fw-bold;
-$btn-font-weight: $fw-medium;
 
 $btn-icon-size: 20px;
 $btn-icon-move: 4px;

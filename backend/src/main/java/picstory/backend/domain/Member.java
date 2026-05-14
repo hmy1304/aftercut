@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -27,6 +28,10 @@ public class Member {
 
     @Column(unique = true, length = 30)
     private String phone;
+
+    // ✅ 카카오 로그인 추가 — nullable (일반 회원은 null)
+    @Column(unique = true, length = 100)
+    private String kakaoId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -50,16 +55,33 @@ public class Member {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // 기존 일반 회원가입 생성자 (변경 없음)
     public Member(String name, String email, String passwordHash, String phone) {
-        this.name=name;
-        this.email=email;
+        this.name = name;
+        this.email = email;
         this.passwordHash = passwordHash;
         this.phone = phone;
         this.status = MemberStatus.ACTIVE;
         this.emailVerified = false;
     }
 
+    // ✅ 카카오 소셜 로그인 전용 생성자
+    public Member(String name, String email, String kakaoId, boolean isSocial) {
+        this.name = name;
+        this.email = email;
+        this.kakaoId = kakaoId;
+        this.passwordHash = UUID.randomUUID().toString(); // 소셜 로그인은 비밀번호 불필요 → 더미값
+        this.phone = null;
+        this.status = MemberStatus.ACTIVE;
+        this.emailVerified = true; // 카카오에서 이메일 인증 완료
+    }
+
     public void changeStatus(MemberStatus status) {
         this.status = status;
+    }
+
+    // ✅ 기존 일반 회원이 카카오 로그인 시 kakaoId 연동
+    public void updateKakaoId(String kakaoId) {
+        this.kakaoId = kakaoId;
     }
 }

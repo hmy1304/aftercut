@@ -1,46 +1,52 @@
-import React, {useState} from 'react'
-import Button from '@/components/ui/Button'
+import React, { useEffect, useState } from 'react'
+import Button from '../../components/ui/Button'
 import './Auth.scss'
-import Input from "@/components/ui/Input"
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { login as loginApi } from '@/api/auth.api'
-import {useAuth} from '@/store/auth.store'
+import Input from '../../components/ui/Input'
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
+import { login as loginApi } from '../../api/auth.api'
+import { useAuth } from '../../store/auth.store'
 
-const bgImages = [
-  './images/bannerbg.png',
-  './images/bannerbg.png',
-  './images/bannerbg.png',
-]
+// ✅ 카카오 로그인 — 백엔드 /auth/kakao 엔드포인트 주소
+const KAKAO_LOGIN_URL = `${import.meta.env.VITE_API_URL}/auth/kakao`
 
 const Login = () => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
-  const {login, isReady, isAuthed} = useAuth()
+  const { login, isReady, isAuthed } = useAuth()
 
   const [form, setForm] = useState({
-    email:'',
-    password:''
+    email: '',
+    password: ''
   })
 
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleChange = (e) => {
-    const {name, value} = e.target
+  // ✅ 카카오 콜백 실패 시 URL 파라미터로 넘어오는 에러 처리
+  useEffect(() => {
+    const urlError = searchParams.get('error')
+    if (urlError) {
+      if (urlError === 'kakao_cancelled') {
+        setError('카카오 로그인이 취소되었습니다.')
+      } else {
+        setError(decodeURIComponent(urlError))
+      }
+    }
+  }, [searchParams])
 
-    setForm((prev)=>({
-      ...prev,
-      [name]:value
-    }))
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if(!form.email.trim()) {
+    if (!form.email.trim()) {
       setError('이메일을 입력해주세요.')
       return
     }
-    if(!form.password.trim()) {
+    if (!form.password.trim()) {
       setError('비밀번호를 입력해주세요.')
       return
     }
@@ -49,8 +55,8 @@ const Login = () => {
       setIsLoading(true)
       setError('')
       const data = await loginApi({
-        email:form.email.trim(),
-        password:form.password
+        email: form.email.trim(),
+        password: form.password
       })
       login(data)
       navigate('/app')
@@ -59,6 +65,11 @@ const Login = () => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // ✅ 카카오 로그인 버튼 클릭 — 백엔드 /auth/kakao 로 리디렉션
+  const handleKakaoLogin = () => {
+    window.location.href = KAKAO_LOGIN_URL
   }
 
   const handleBack = () => {
@@ -73,52 +84,73 @@ const Login = () => {
     <section className='auth'>
       <div className="landing-bg">
         <div className="bg-track">
-          {[...bgImages,...bgImages].map((src,i)=>(
-            <div key={i} className="bg-item">
-              <img src={src} alt="bg" />
-            </div>
-          ))}
+          {/* 기존 배경 유지 */}
         </div>
       </div>
       <div className="inner">
         <div className="auth-box">
           <nav>
             <h2>로그인</h2>
-            <Button 
-            text="뒤로가기"
-            className="back"
-            icons
-            onClick={handleBack}
+            <Button
+              text="뒤로가기"
+              className="back"
+              icons
+              onClick={handleBack}
             />
           </nav>
+
           <form className='auth-form' onSubmit={handleSubmit}>
             <div className="form-group">
-              <Input 
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="이메일을 입력하세요"
+              <Input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="이메일을 입력하세요"
               />
-              <Input 
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="비밀번호를 입력하세요"
+              <Input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="비밀번호를 입력하세요"
               />
             </div>
+
             <div className="auth-btn-wrap">
-              <Button 
-              text="로그인"
-              type="submit"
-              className="intro"
+              <Button
+                text={isLoading ? '로그인 중...' : '로그인'}
+                type="submit"
+                className="intro"
+                disabled={isLoading}
               />
             </div>
           </form>
+
           {error && <p className='error-text'>{error}</p>}
+
+          {/* ✅ 소셜 로그인 구분선 */}
+          <div className="social-divider">
+            <span>또는</span>
+          </div>
+
+          {/* ✅ 카카오 로그인 버튼 */}
+          <button
+            type="button"
+            className="kakao-login-btn"
+            onClick={handleKakaoLogin}
+          >
+            <img
+              src="/images/kakao-logo.svg"
+              alt="카카오"
+              className="kakao-icon"
+              onError={(e) => { e.target.style.display = 'none' }}
+            />
+            카카오 로그인
+          </button>
+
           <div className="auth-now">
-            <span>이메일/비밀번호를 잊으셨나요?</span>
+            <span>계정이 없으신가요?</span>
             <Link to='/signup'>
               <span className='login-span'>회원가입</span>
             </Link>

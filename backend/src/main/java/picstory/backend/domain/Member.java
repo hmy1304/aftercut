@@ -80,6 +80,11 @@ public class Member {
         this.status = status;
     }
 
+    public void updateProfile(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
     // ✅ 기존 일반 회원이 카카오 로그인 시 kakaoId 연동
     public void updateKakaoId(String kakaoId) {
         this.kakaoId = kakaoId;

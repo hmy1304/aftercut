@@ -9,6 +9,7 @@ import picstory.backend.domain.Member;
 import picstory.backend.repository.MemberRepository;
 import picstory.backend.web.dto.LoginRequest;
 import picstory.backend.web.dto.MemberResponse;
+import picstory.backend.web.dto.UpdateProfileRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ import picstory.backend.web.dto.MemberResponse;
 public class LoginService {
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final MemberService memberService;
 
     private static final String LOGIN_MEMBER_ID= "LOGIN_MEMBER_ID";
 
@@ -44,6 +46,15 @@ public class LoginService {
                 .orElseThrow(()->new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         return MemberResponse.from(member);
+    }
+
+    @Transactional
+    public MemberResponse updateMe(HttpSession session, UpdateProfileRequest request) {
+        Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
+        if(memberId == null) {
+            throw new IllegalArgumentException("로그인된 사용자가 없습니다.");
+        }
+        return memberService.updateProfile(memberId, request);
     }
 
     @Transactional

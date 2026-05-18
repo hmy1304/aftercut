@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import './ProfileComponentAll.scss'
 import {useAuth} from '../../store/auth.store'
 import {getPosts} from '../../api/post.api'
-// import {getMytags} from '../../api/tag.api'
+import {getMyTags} from '../../api/tag.api'
 import {PROFILE_ICONS} from '../../constans/profileIcon'
 
 const ProfileSummary = () => {
@@ -11,7 +11,7 @@ const ProfileSummary = () => {
   const [posts, setPosts] = useState([])
 
   const loadMyTags = async() => {
-    const res = await getMytags()
+    const res = await getMyTags()
     const list = Array.isArray(res) ? res : res?.data ?? []
 
     setTags(
@@ -36,7 +36,7 @@ const ProfileSummary = () => {
 
   useEffect(()=>{
     loadMyTags()
-    loadMyPosts
+    loadMyPosts()
   },[])
 
   const formatDate = (dateStr) => {
@@ -72,7 +72,7 @@ const ProfileSummary = () => {
             <img src={PROFILE_ICONS.calendar} alt="icon" />
             가입일
           </span>
-          <span className="activity-value">{formatDate(member.createAt)}</span>
+          <span className="activity-value">{formatDate(member.createdAt)}</span>
         </li>
       </ul>
     </div>

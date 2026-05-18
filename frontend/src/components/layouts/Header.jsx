@@ -18,10 +18,10 @@ const Header = () => {
       name: '프로필',
       link: '/app/profile'
     },
-    {
-      name: '설정',
-      link: '/app/setting'
-    }
+    // {
+    //   name: '설정',
+    //   link: '/app/setting'
+    // }
   ]
 
   const handleLogout = async() => {

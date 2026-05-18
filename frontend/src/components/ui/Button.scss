@@ -37,7 +37,10 @@
     &.intro {
         background: $blue;
         color: $fg;
-        padding: $btn-padding-y $btn-landing-padding-x;
+        width: 100%;
+        padding: 14px;
+        font-size: $text-sm;
+        font-weight: $fw-bold;
 
         &:hover:not(:disabled) {
             background: $fg;
@@ -73,10 +76,10 @@
         }
     }
 
-    // ── 뒤로가기 (다크 배경 기본) ─────────────────────
-    &.back {
-        // 기본은 $line (헤더/다크 배경에서 사용)
-    }
+    // // ── 뒤로가기 (다크 배경 기본) ─────────────────────
+    // &.back {
+    //     // 기본은 $line (헤더/다크 배경에서 사용)
+    // }
 
     // ── 뒤로가기 라이트 배경 조합 ─────────────────────
     &.back.bl {
@@ -98,6 +101,43 @@
             background: $gray-100;
             color: $gray-900;
             transform: translateY(0);
+        }
+    }
+
+    // ──────────────────────────────
+    // ✅ 카카오 로그인 버튼
+    // ──────────────────────────────
+    &.kakao-login-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px;
+        background-color: #FEE500;
+        color: #000000;
+        border: none;
+        border-radius: $r-lg;
+        font-size: $text-sm;
+        font-weight: $fw-bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.15s ease;
+        font-family: inherit;
+
+        &:hover {
+            color: #000000;
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+            background-color: #E6CF00;
+        }
+
+        .kakao-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
         }
     }
 }

@@ -121,42 +121,6 @@
     }
 }
 
-// ──────────────────────────────
-// ✅ 카카오 로그인 버튼
-// ──────────────────────────────
-.kakao-login-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 14px;
-    background-color: #FEE500;
-    color: #000000;
-    border: none;
-    border-radius: $r-lg;
-    font-size: $text-sm;
-    font-weight: $fw-bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.15s ease;
-    font-family: inherit;
-
-    &:hover {
-        background-color: #F0D900;
-        transform: translateY(-1px);
-    }
-
-    &:active {
-        transform: translateY(0);
-        background-color: #E6CF00;
-    }
-
-    .kakao-icon {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-    }
-}
 
 // ──────────────────────────────
 // 공통 에러 텍스트

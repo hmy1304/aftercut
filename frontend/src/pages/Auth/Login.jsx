@@ -6,6 +6,12 @@ import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { login as loginApi } from '../../api/auth.api'
 import { useAuth } from '../../store/auth.store'
 
+const bgImages = [
+  './images/bannerbg.png',
+  './images/bannerbg.png',
+  './images/bannerbg.png',
+]
+
 // ✅ 카카오 로그인 — 백엔드 /auth/kakao 엔드포인트 주소
 const KAKAO_LOGIN_URL = `${import.meta.env.VITE_API_URL}/auth/kakao`
 
@@ -84,7 +90,11 @@ const Login = () => {
     <section className='auth'>
       <div className="landing-bg">
         <div className="bg-track">
-          {/* 기존 배경 유지 */}
+          {[...bgImages,...bgImages].map((src,i)=>(
+            <div key={i} className="bg-item">
+              <img src={src} alt="bg" />
+            </div>
+          ))}
         </div>
       </div>
       <div className="inner">
@@ -135,7 +145,7 @@ const Login = () => {
           </div>
 
           {/* ✅ 카카오 로그인 버튼 */}
-          <button
+          {/* <button
             type="button"
             className="kakao-login-btn"
             onClick={handleKakaoLogin}
@@ -147,7 +157,13 @@ const Login = () => {
               onError={(e) => { e.target.style.display = 'none' }}
             />
             카카오 로그인
-          </button>
+          </button> */}
+          <Button 
+          text="카카오 로그인"
+          className="kakao-login-btn"
+          onClick={handleKakaoLogin}
+          kakao
+          />
 
           <div className="auth-now">
             <span>계정이 없으신가요?</span>

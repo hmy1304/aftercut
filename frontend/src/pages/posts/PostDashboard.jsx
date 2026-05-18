@@ -41,6 +41,11 @@ const PostDashboard = () => {
         }))
 
         setPosts(mappedPosts)
+        const uniqueTags = [
+          '전체',
+          ...new Set(mappedPosts.flatMap((post)=>post.tags || []))
+        ]
+        setTags(uniqueTags)
       } catch (error) {
         console.error(error?.response?.data?.message || error.message || '게시글 조회 실패')
         setPosts([])
@@ -73,6 +78,18 @@ const PostDashboard = () => {
     navigate('/app/posts/new')
   }
 
+  const handlePostDelete = async(e) => {
+    e.preventDefault
+    if(confirm('후기를 정말 삭제하시겠습니까?')) {
+      try {
+        await deletePost(Number(post.id))
+        navigate('/app', {replace:true})
+      } catch (error) {
+        console.error('후기 삭제 오류')
+      }
+    }
+  }
+
   return (
     <section className='page post-section'>
       <div className="inner">
@@ -100,7 +117,7 @@ const PostDashboard = () => {
             onClick={handleCreatePost}/>
           </div>
         </div>
-        <PostList posts={filteredPosts}/>
+        <PostList posts={filteredPosts} onClick={handlePostDelete} pagetype={true}/>
       </div>
     </section>
   )

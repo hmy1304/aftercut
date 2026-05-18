@@ -44,6 +44,11 @@ const PostsAll = () => {
         }))
 
         setPosts(mappedPosts)
+        const uniqueTags = [
+          '전체',
+          ...new Set(mappedPosts.flatMap((post)=>post.tags || []))
+        ]
+        setTags(uniqueTags)
       } catch (error) {
         setFetchError(error?.response?.data?.message || error.message || '게시글 조회에 실패했습니다.')
         setPosts([])
@@ -110,9 +115,9 @@ const PostsAll = () => {
             onClick={handleCreatePost}/>
           </div>
         </div>
-        <PostList posts={filteredPosts}/>
+        <PostList posts={currentPosts} pagetype={false}/>
 
-        <div className="btn-wrap">
+        <div className="page-btn-wrap">
           <Button 
           onClick={handlePrevPage}
           text="<"

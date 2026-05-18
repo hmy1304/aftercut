@@ -1,10 +1,11 @@
 import React from 'react'
 
-const PostTag = ({ tag, onDelete }) => {
+const PostTag = ({ tag, onClick, showDelete = true }) => {
   return (
     <span className='post-tag'>
       <span>{tag}</span>
-      {onDelete && (
+      
+      {showDelete && (
         <button
           type="button"
           className='post-tag-delete'

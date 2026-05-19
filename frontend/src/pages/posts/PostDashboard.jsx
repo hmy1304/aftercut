@@ -54,22 +54,7 @@ const PostDashboard = () => {
     fetchPosts()
   },[])
 
-  // const filteredByTag = selectedTag === '전체'
-  // ? posts
-  // : posts.filter((post)=>
-  //   post.tags.includes(selectedTag)
-  // )
   
-  // const filteredPosts = filteredByTag.filter((post)=> {
-  //   const keyword = searchKeyword.toLowerCase().trim()
-
-  //   if(!keyword) return true
-
-  //   return (
-  //     post.title.toLowerCase().includes(keyword) ||
-  //     post.content.toLowerCase().includes(keyword)
-  //   )
-  // })
 
   const filteredPosts = useFilteredPosts(posts, selectedTag, searchKeyword)
 

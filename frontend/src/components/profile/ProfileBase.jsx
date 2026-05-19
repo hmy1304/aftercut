@@ -141,7 +141,7 @@ const ProfileBase = () => {
         <Input 
         className='profile-input'
         id="profile-email"
-        value={member.mail ?? ''}
+        value={member.email ?? ''}
         readOnly
         disabled
         />
@@ -174,17 +174,17 @@ const ProfileBase = () => {
             text={saving ? "저장 중..." : "저장"}
             onClick={saveProfile}
             disabled={saving}
-            className="save"
+            className="primary"
             />
             <Button 
             text="취소"
             onClick={cancelEdit}
             disabled={saving}
-            className="cancel"
+            className="primary"
             />
           </>
         ) : (
-          <Button text="내 정보 수정하기" className="edit" onClick={startEdit}/>
+          <Button text="내 정보 수정하기" className="primary" onClick={startEdit}/>
         )}
       </div>
     </div>

@@ -13,10 +13,15 @@ const useFilteredPosts = (posts, selectedTag, searchKeyword) => {
     const filtered = filteredByTag.filter((post)=>{
         if(!keyword) return true
 
-        return (
-            post.title.toLowerCase().includes(keyword) ||
-            post.content.toLowerCase().includes(keyword)
-        )
+        const titleMatch = post.title?.toLowerCase().includes(keyword)
+
+        const contentMatch = post.content
+            ?.toLowerCase()
+            .includes(keyword)
+
+        const tagMatch = post.tags?.some((tag)=> tag.toLowerCase().includes(keyword))
+
+        return titleMatch || contentMatch || tagMatch
     })
 
     return filtered

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useMemo} from 'react'
 import PostHeader from "../../components/posts/PostHeader"
 import PostList from "../../components/posts/PostList"
 import TagFilterBar from "../../components/posts/TagFilterBar"
 import Button from "../../components/ui/Button"
 import Input from "../../components/ui/Input"
 import "./PostPagesAll.scss"
-import {getPosts} from "../../api/post.api"
+import {getPosts, deletePost} from "../../api/post.api"
 import { useNavigate } from 'react-router-dom'
 import useFilteredPosts from '../../hooks/useFilteredPosts'
 
@@ -17,6 +17,9 @@ const PostDashboard = () => {
   const [posts, setPosts] = useState([])
   const navigate = useNavigate()
   const [fetchError, setFetchError] = useState('')
+
+  const [sortType, setSortType] = useState('latest')
+  const [showSortBox, setShowSorBox] = useState(false)
 
   useEffect(()=>{
     setFetchError('')
@@ -37,7 +40,8 @@ const PostDashboard = () => {
           title:post.title,
           content:post.content,
           tags:post.tags || [],
-          thumbnail:post.imageUrl || ''
+          thumbnail:post.imageUrl || '',
+          createdAt:post.createdAt
         }))
 
         setPosts(mappedPosts)
@@ -54,24 +58,37 @@ const PostDashboard = () => {
     fetchPosts()
   },[])
 
-  
-
   const filteredPosts = useFilteredPosts(posts, selectedTag, searchKeyword)
+
+  const sortedPosts = useMemo(()=>{
+    const copiedPosts = [...filteredPosts]
+
+    return copiedPosts.sort((a, b)=>{
+      const dateA = new Date(a.createdAt).getTime()
+      const dateB = new Date(b.createdAt).getTime()
+
+      if(sortType === 'latest') {
+        return dateB - dateA
+      }
+
+      return dateA - dateB
+    })
+  }, [filteredPosts, sortType])
 
   const handleCreatePost = () => {
     console.log('새 메모 작성')
     navigate('/app/posts/new')
   }
 
-  const handlePostDelete = async(e) => {
-    e.preventDefault
-    if(confirm('후기를 정말 삭제하시겠습니까?')) {
-      try {
-        await deletePost(Number(post.id))
-        navigate('/app', {replace:true})
-      } catch (error) {
-        console.error('후기 삭제 오류')
-      }
+  const handlePostDelete = async(postId) => {
+    try {
+      await deletePost(postId)
+
+      setPosts((prev)=>
+        prev.filter((post)=>post.id !== postId)
+      )
+    } catch (error) {
+      console.error('후기 삭제 오류', error.response?.data || error.message)
     }
   }
 
@@ -93,8 +110,36 @@ const PostDashboard = () => {
           onChangeTag={setSelectedTag}
           />
           <div className="post-btn-wrap">
-            <div className="filter-btn">
-              <img src="../../images/filter.svg" alt="filter" />
+            <div className="filter-wrapper">
+              <div 
+              className="filter-btn"
+              onClick={()=>setShowSorBox(!showSortBox)}
+              >
+                <img src="../../images/filter.svg" alt="filter" />
+              </div>
+              {showSortBox && (
+                <div className='sort-box'>
+                  <button
+                  type='button'
+                  onClick={()=>{
+                    setSortType('latest')
+                    setShowSorBox(false)
+                  }}
+                  >
+                    최신순
+                  </button>
+
+                  <button
+                  type='button'
+                  onClick={()=>{
+                    setSortType('oldest')
+                    setShowSorBox(false)
+                  }}
+                  >
+                    오래된 순
+                  </button>
+                </div>
+              )}
             </div>
             <Button 
             text="후기 작성하기" 
@@ -102,7 +147,7 @@ const PostDashboard = () => {
             onClick={handleCreatePost}/>
           </div>
         </div>
-        <PostList posts={filteredPosts} onClick={handlePostDelete} pagetype={true}/>
+        <PostList posts={sortedPosts} onDelete={handlePostDelete} pagetype={true}/>
       </div>
     </section>
   )

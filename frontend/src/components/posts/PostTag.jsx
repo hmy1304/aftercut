@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PostTag = ({ tag, onClick, showDelete = true }) => {
+const PostTag = ({ tag, onDelete, showDelete = true }) => {
   return (
     <span className='post-tag'>
       <span>{tag}</span>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import PostHeader from '../../components/posts/PostHeader'
 import PostList from '../../components/posts/PostList'
 import TagFilterBar from '../../components/posts/TagFilterBar'
@@ -7,7 +7,7 @@ import Input from '../../components/ui/Input'
 import './PostPagesAll.scss'
 import {useNavigate} from 'react-router-dom'
 import useFilteredPosts from '../../hooks/useFilteredPosts'
-import { getPosts } from '../../api/post.api'
+import { getPosts,deletePost } from '../../api/post.api'
 
 const PostsAll = () => {
   const [selectedTag, setSelectedTag] = useState('전체')
@@ -20,6 +20,9 @@ const PostsAll = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 3
+
+  const [sortType, setSortType] = useState('latest')
+  const [showSortBox, setShowSorBox] = useState(false)
 
   useEffect(()=>{
     setFetchError('')
@@ -40,7 +43,8 @@ const PostsAll = () => {
           title:post.title,
           content:post.content,
           tags:post.tags || [],
-          thumbnail:post.imageUrl || ''
+          thumbnail:post.imageUrl || '',
+          createdAt:post.createdAt
         }))
 
         setPosts(mappedPosts)
@@ -58,6 +62,21 @@ const PostsAll = () => {
   },[])
 
   const filteredPosts = useFilteredPosts(posts, selectedTag, searchKeyword)
+
+  const sortedPosts = useMemo(()=>{
+    const copiedPosts = [...filteredPosts]
+  
+    return copiedPosts.sort((a, b)=>{
+      const dateA = new Date(a.createdAt).getTime()
+      const dateB = new Date(b.createdAt).getTime()
+  
+      if(sortType === 'latest') {
+        return dateB - dateA
+      }
+  
+      return dateA - dateB
+    })
+  }, [filteredPosts, sortType])
 
   useEffect(()=>{
     setCurrentPage(1)
@@ -88,6 +107,18 @@ const PostsAll = () => {
     navigate('/app/posts/new')
   }
 
+  const handlePostDelete = async(postId) => {
+    try {
+      await deletePost(postId)
+
+      setPosts((prev)=>
+        prev.filter((post)=>post.id !== postId)
+      )
+    } catch (error) {
+      console.error('후기 삭제 오류', error.response?.data || error.message)
+    }
+  }
+
   return (
     <section className='page post-section post-all'>
       <div className="inner">
@@ -106,8 +137,36 @@ const PostsAll = () => {
           onChangeTag={setSelectedTag}
           />
           <div className="post-btn-wrap">
-            <div className="filter-btn">
-              <img src="../../images/filter.svg" alt="filter" />
+            <div className="filter-wrapper">
+              <div 
+              className="filter-btn"
+              onClick={()=>setShowSorBox(!showSortBox)}
+              >
+                <img src="../../images/filter.svg" alt="filter" />
+              </div>
+              {showSortBox && (
+                <div className='sort-box'>
+                  <button
+                  type='button'
+                  onClick={()=>{
+                    setSortType('latest')
+                    setShowSorBox(false)
+                  }}
+                  >
+                    최신순
+                  </button>
+
+                  <button
+                  type='button'
+                  onClick={()=>{
+                    setSortType('oldest')
+                    setShowSorBox(false)
+                  }}
+                  >
+                    오래된 순
+                  </button>
+                </div>
+              )}
             </div>
             <Button 
             text="후기 작성하기" 
@@ -115,7 +174,7 @@ const PostsAll = () => {
             onClick={handleCreatePost}/>
           </div>
         </div>
-        <PostList posts={currentPosts} pagetype={false}/>
+        <PostList posts={sortedPosts} onDelete={handlePostDelete} pagetype={false}/>
 
         <div className="page-btn-wrap">
           <Button 

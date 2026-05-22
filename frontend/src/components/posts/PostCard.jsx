@@ -30,7 +30,7 @@ const PostCard = ({post, onDelete, pagetype}) => {
           <h3 className="post-tile">{post.title}</h3>
           <div className="tags">
             {(post.tags || []).map((tag, i)=>(
-              <PostTag key={i} tag={tag}/>
+              <PostTag key={i} tag={tag} showDelete={false}/>
             ))}
           </div>
           <p className="post-content">{post.content}</p>

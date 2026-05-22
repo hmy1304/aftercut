@@ -29,8 +29,8 @@ services:
 
   backend:
     image: ${DOCKERHUB_USER}/aftercut-backend:${BACKEND_TAG:-latest}
-    container_name: spring-back-prod
-    restart: always
+    container_name: aftercut-backend
+    restart: unless-stopped
     depends_on:
       mysql:
         condition: service_healthy
@@ -57,8 +57,8 @@ services:
 
   frontend:
     image: ${DOCKERHUB_USER}/aftercut-frontend:${FRONTEND_TAG:-latest}
-    container_name: vite-front-prod
-    restart: always
+    container_name: aftercut
+    restart: unless-stopped
     depends_on:
       backend:
         condition: service_healthy

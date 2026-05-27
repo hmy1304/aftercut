@@ -15,7 +15,7 @@ services:
     healthcheck:
       test:
         [
-          "CMD",
+          "CMD-SHELL",
           "mysqladmin",
           "ping",
           "-h",
@@ -26,6 +26,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 30
+      start_period: 30s
 
   backend:
     image: ${DOCKERHUB_USER}/aftercut-backend:${BACKEND_TAG:-latest}

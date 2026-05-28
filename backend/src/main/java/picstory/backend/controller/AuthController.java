@@ -31,7 +31,7 @@ public class AuthController {
     private String redirectUri;
 
     // 프론트엔드 URL (환경변수로 관리하거나 로컬 테스트용 하드코딩)
-    @Value("${frontend-url:http://localhost:5173}")
+    @Value("${app.frontend-url}")
     private String frontendUrl;
 
     @PostMapping("/login")
@@ -59,7 +59,7 @@ public class AuthController {
     @GetMapping("/kakao")
     public void kakaoLogin(HttpServletResponse response) throws IOException {
         String url = "https://kauth.kakao.com/oauth/authorize?client_id=" + clientId
-                + "&redirect_uri=" + redirectUri + "&response_type=code";
+                + "&redirect_uri=" + redirectUri + "&response_type=code&prompt=login";
         response.sendRedirect(url);
     }
 

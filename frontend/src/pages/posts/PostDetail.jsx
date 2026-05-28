@@ -75,7 +75,7 @@ const PostDetail = () => {
             </h4>
             <div className="tags">
               {tagList.map((tag, i) => (
-                <PostTag key={`${tag}-${i}`} tag={tag} />
+                <PostTag key={`${tag}-${i}`} tag={tag} showDelete={false}/>
               ))}
             </div>
             <div className="btn-wrap">

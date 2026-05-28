@@ -12,7 +12,7 @@ import PostEdit from "../pages/posts/PostEdit"
 import PostCreate from "../pages/posts/PostCreate"
 import PostDetail from "../pages/posts/PostDetail"
 import Profile from "../pages/profile/Profile"
-// import KakaoCallback from '../pages/Auth/KakaoCallback'
+import KakaoCallback from '../pages/Auth/KakaoCallback'
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
       {path: '/', element: <Landing/>},
       {path: '/login', element: <Login/>},
       {path: '/signup', element: <Signup/>},
-      // { path: '/auth/kakao/callback', element: <KakaoCallback /> }
+      { path: '/oauth/kakao/callback', element: <KakaoCallback /> }
     ]
   }, {
     //보호영역
